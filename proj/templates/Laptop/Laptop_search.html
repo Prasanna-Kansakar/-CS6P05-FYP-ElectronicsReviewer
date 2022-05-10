@@ -1,0 +1,101 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}
+    Laptop Search
+{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Find laptop</h2>
+    </div>
+    <div class="card border-secondary">
+        <div class="card-header text-white bg-primary mb-3">
+        Search Panel
+        </div>
+        <div class="card-body">
+            <form action= '' method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="form-horizontal">
+                    <div class="row form-group">
+                        <label class="control-label col-md-2">{{form.name.label}}</label>
+                        <div class="col-md-10">
+                            {{form.name}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row form-group">
+                        <label class="control-label col-md-2">{{form.brand.label}}</label>
+                        <div class="col-md-4">
+                            {{form.brand}}
+                        </div>
+                        <label class="control-label col-md-2 text-end">{{form.RAM.label}}</label>
+                        <div class="col-md-4">
+                            {{form.RAM}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row form-group">
+                        <label class="control-label col-md-2">{{form.storage.label}}</label>
+                        <div class="col-md-4">
+                            {{form.storage}}
+                        </div>
+                        <label class="control-label col-md-2 text-end">{{form.processor.label}}</label>
+                        <div class="col-md-4">
+                            {{form.processor}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row form-group">
+                        <label class="control-label col-md-2">{{form.gpu.label}}</label>
+                        <div class="col-md-4">
+                            {{form.gpu}}
+                        </div>
+                        <label class="control-label col-md-2 text-end">{{form.display.label}}</label>
+                        <div class="col-md-4">
+                            {{form.display}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row form-group">
+                        <label class="control-label col-md-2">{{form.os.label}}</label>
+                        <div class="col-md-4">
+                            {{form.os}}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="float-md-end">
+                                <button class="btn btn-secondary" type="submit" id="SubmitButton"><i class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{form.errors}}
+                </div> 
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-12" data-aos="fade-up">
+                <h3 class="category-title">{{laptop.count}} Laptops Found:</h3>
+                {% for item in laptop %}
+                <div class="d-md-flex post-entry-2 half">
+                    <a href="{% url 'laptop user view' id=item.id %}" class="me-4 thumbnail">                        
+                        <img src="{% static item.get_thumbnail %}" alt=""  height="300">
+                    </a>
+                    <div>
+                        <div class="post-meta"><span class="mx-1">&bullet;</span> <span>{{item.created_date|date:"M d, Y" }}</span></div>
+                        <h3><a href="{% url 'laptop user view' id=item.id %}">{{item.name}}</a></h3>
+                        <p>Ratings : {{item.get_avg_rating}} <i class="fa    fa-star"></i></p>
+                        <p>Type: {{item.type}}</p>
+                        <p>Brand: {{item.brand}}</p>
+                        <p>{{item.feature| truncatechars:300 |safe}}</p>
+                        </div>
+                    </div>
+                </div> 
+                <hr style="height:4px;">
+                {% endfor %}            
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

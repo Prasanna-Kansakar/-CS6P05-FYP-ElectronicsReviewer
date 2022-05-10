@@ -1,0 +1,32 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}Blogs{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-md-12" data-aos="fade-up">
+            <h3 class="category-title">Latest Blogs</h3>
+            {% for item in page_obj %}
+            <div class="d-md-flex post-entry-2 half">
+                <a href="{% url 'blog user view' id=item.id %}" class="me-4 thumbnail">
+                    <img src="{% static item.thumbnail %}" alt="" class="img-fluid">
+                </a>
+                <div>
+                    <div class="post-meta"><span class="mx-1">&bullet;</span> <span>{{item.updated_date|date:"M d, Y" }}</span></div>
+                    <h3><a href="{% url 'blog user view' id=item.id %}">{{item.title}}</a></h3>
+                    <p>{{item.description}}</p>
+                    <p>{{item.content| truncatechars:210 |safe}}</p>
+                    <div class="d-flex align-items-center author">
+                    <div class="name">
+                        <h3 class="m-0 p-0">{{item.author.username}}</h3>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <hr style="height:4px;"> 
+            {% endfor %}
+            {% include 'shared/pagination.html' %}            
+        </div>
+    </div>
+</div>
+{% endblock %}

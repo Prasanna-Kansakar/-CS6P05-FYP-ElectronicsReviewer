@@ -1,0 +1,15 @@
+{% load static %}
+
+<div class="single-post">
+    <div class="post-meta"><span class="date">{{blog.author.username}}</span> <span class="mx-1">&bullet;Last Modified: </span> <span>{{blog.updated_date|date:"M d, Y" }}</span></div>
+    <h1 class="mb-1">{{blog.title}}</h1>
+    <div class="post-meta">{{blog.description}}</div>
+    <figure class="my-4">
+        <div class="text-center"> 
+            <img src="{% static blog.thumbnail %}" alt="blog-image" class="img-fluid">
+        </div>
+    </figure>
+    <p>
+        {{blog.content|safe}}
+    </p>
+</div>

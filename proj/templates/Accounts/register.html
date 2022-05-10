@@ -1,0 +1,67 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}Register Page{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Sign up</h2>        
+    </div>
+    <div class="row">
+        <div class ="col-md-6 col-of offset-md-3">
+            <div class="card border-secondary">
+                <div class="card-header text-white bg-primary mb-3">
+                    Fill Registration Detail
+                </div>
+                <div class="card-body">
+                    <form action= '' method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="form-horizontal">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">{{form.username.label}}</label>
+                                <div class="col-md-8">
+                                    {{form.username}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">{{form.email.label}}</label>
+                                <div class="col-md-8">
+                                    {{form.email}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">{{form.password1.label}}</label>
+                                <div class="col-md-8">
+                                    {{form.password1}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">{{form.password2.label}}</label>
+                                <div class="col-md-8">
+                                    {{form.password2}}
+                                </div>
+                            </div>
+                            <br>
+                            {{form.errors}}
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <div class="float-md-end">
+                                        <button class="btn btn-secondary" type="submit" id="SubmitButton"><i class="fa fa-check"></i> Submit</button>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="mt-4">
+                                <div class="d-flex justify-content-center links">
+                                    Already have an account?... <a href="{% url 'login' %}" class="ml-2">Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>                    
+            </div>
+        </div>
+    </div> 
+</div>
+{% endblock %}

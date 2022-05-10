@@ -1,0 +1,67 @@
+<table class="table table-striped table-bordered table-hover">
+    <tbody>
+        <tr>
+            <td>Name</td>
+            <td>
+                {{laptop.name}}
+            </td>
+        </tr>
+        <tr>
+            <td>User Ratings</td>
+            <td>
+                {{laptop.get_avg_rating}} <i class="fa fa-star"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>Brand</td>
+            <td>
+                {{laptop.brand}}
+            </td>
+        </tr>
+        <tr>
+            <td>RAM</td>
+            <td>
+                {% for RAM in laptop.RAM.all %}
+                    {{RAM.name}}/
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Storage</td>
+            <td>
+                {% for Storage in laptop.storage.all %}
+                {{Storage.name}}/
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Processor</td>
+            <td>
+                {% for Processor in laptop.processor.all %}
+                    {{Processor.name}}/
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Gpu</td>
+            <td>
+                {% for gpu in laptop.gpu.all %}
+                    {{gpu.name}}/
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Display</td>
+            <td>
+                {% for display in laptop.display.all %}
+                    {{display.name}}/
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-center">
+                <a class="btn btn-md  btn-light-blue tooltips" href="{% url 'laptop user view' id=laptop.id %}" >Learn More...</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

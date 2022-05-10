@@ -1,0 +1,75 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}{{accessory.name}}{% endblock %}
+{% block extracss %}
+<style>
+  .modal-dialog {
+    pointer-events: all;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    {% include 'shared/Accessory_view.html' %}
+    {% if user.is_authenticated %}
+        {% if not hasbookmarked%}
+            <button class="btn btn-dark"><a href="{%url 'bookmark accessory' id=accessory.id %}" style="color: aliceblue;"><i class="fa fa-bookmark"></i> Bookmark This</a></button>
+        {%else%}
+            <button class="btn btn-dark"><a href="{%url 'bookmark accessory' id=accessory.id %}" style="color: aliceblue;"><i class="fa fa-bookmark"></i> Unbookmark This</a></button>
+        {%endif%}
+    {%endif%}
+    <br><br>
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>User Reviews ({{reviews.count}} Reviews): {{accessory.get_avg_rating}} <i class="fa fa-star"></i></h2>
+        {% if user.is_authenticated %}
+        <div>
+            <button type="button" id ="ajaxLink" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ReviewForm">
+                Add/Edit Review
+            </button>
+        </div>
+        {%endif%}
+    </div>
+    {%for item in reviews%}
+    <div class="d-md-flex post-entry-2 half">        
+        <div>
+            <h3>{{item.user}}: {{item.ratings}}  <i class="fa fa-star" aria-hidden="true"></i></h3>
+            <div class="post-meta"><span class="mx-1">&bullet;</span> <span>Last Modified: {{item.updated_date|date:"M d, Y" }}</span></div>
+            <p>{{item.content}}</p>
+        </div>
+    </div>
+    <hr style="height:4px;"> 
+    {%endfor%}
+</div>
+<div class="modal fade" id="ReviewForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Add/Edit Review</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id = "modal-body">
+            
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+   $(document).on('click', '#ajaxLink', function () {
+            $.ajax({
+                type: "GET",
+                url: "{%url 'accessory review' id=accessory.id%}",
+                success: function (response) {
+                    console.log(response);
+                    $('#modal-body').html(response);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+            return false
+        });
+</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}Verify User{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Verify User</h2>
+    </div>
+    <div class="container">
+        <table class="table table-striped table-bordered table-hover datatable">
+            <thead class="table-dark">
+                <tr>
+                    <th>S.no</th>
+                    <th>User</th>
+                    <th>No. of Reviews</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{item.user.username}}</td>
+                    <td>{{item.getreviewscount}}</td>
+                    <td>
+                        <a class="btn btn-md  btn-light-blue tooltips" href="{% url 'confirm verification' id=item.user.id %}" ><i class="fa fa-check-circle" aria-hidden="true"></i>Verify</a>
+                    </td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="{% static 'images/shared/logo.png' %}" rel="icon">
+    <!-- Template Main CSS File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+    <script src="//cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Template Main CSS Files -->
+    <link href="{% static 'css/variables.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="{% static 'css/mobiscroll.jquery.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block extracss %}{% endblock %}
+    <!-- Template Main JS CDN and files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- <script defer src="https://use.fontawesome.com/releases/v4.7.0/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script> -->
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'vendor/aos/aos.js'%}"></script> 
+    <script src="{% static 'js/mobiscroll.jquery.min.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>   
+    <!-- Template Main JS File -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/majorcomponents.js' %}"></script>
+
+    </head>
+
+    <body class="d-flex flex-column min-vh-100">
+      {% block header %}
+      <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+    
+          <a href="{% url 'homepage' %}" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="{% static 'images/shared/logo.png' %}" alt="">
+            <h1>Laptop Trends</h1>
+          </a>
+          <!-- ======= Navbar ======= -->
+          {% block navbar %}
+          <nav id="navbar" class="navbar">
+              <ul>
+                <li><a href="{% url 'laptop user index' %}">Laptops</a></li>
+                <li><a href="{% url 'accessory user index' %}">Accessories</a></li>
+                <li><a href="{% url 'blog user index' %}">Blogs</a></li>
+                <li class="dropdown"><a href="#"><span>Finder </span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                  <ul>
+                    <li><a href="{% url 'search panel laptop' %}">Find Laptop</a></li>
+                    <li><a href="{% url 'search panel' %}">Find Accessory</a></li>
+                    <li><a href="{% url 'compare' %}">Compare</a></li>
+                  </ul>
+                </li>
+                {% if user.is_authenticated %}
+                {% for group in  request.user.groups.all %}
+                {%  if 'Admin' == group.name %}
+                <li class="dropdown"><a href="#"><span>Admin</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                  <ul>
+                    <li><a href="{% url 'verify' %}">Requested Verification</a></li>
+                    <li><a href="{% url 'laptop index' %}">Manage Laptops</a></li>
+                    <li><a href="{% url 'accessory index' %}">Manage Accessories</a></li>
+                  </ul>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="dropdown"><a href="#"><span>User</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                  <ul>
+                    {% for group in  request.user.groups.all %}
+                    {%  if 'VerifiedUser' == group.name %}
+                      <li><a href="{% url 'blog index' %}">My Blogs</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    <li><a href="{% url 'bookmark list' %}">My Bookmarks</a></li>
+                    {% for group in  request.user.groups.all %}
+                    {%  if 'User' == group.name %}                   
+                    <li><a href="{% url 'verify user' %}">Request Verification</a></li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endblock %}
+          <!-- End Navbar -->
+    
+          <div class="position-relative">
+            <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+            <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+            <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+            {% if user.is_authenticated %}
+              <a href="{% url 'logout' %}" class="mx-2">Logout ({{ user.get_username }})</a>
+            {% else %}
+              <a href="{% url 'login' %}" class="mx-2">Login</a>|
+              <a href="{% url 'register' %}" class="mx-2">Sign up</a>
+            {% endif %}  
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          </div>
+    
+        </div>
+    
+      </header><!-- End Header -->
+      {% endblock %}
+      <main id="main">           
+        {% block messages %}
+        <div class="messages" id="messages-list">
+        {% if messages %}
+            {% for message in messages %}
+            <div>
+                {% if message.tags %}
+                     <div class="alert alert-{{ message.tags }} msg fade show" role="alert">{{ message }}</div>
+                {% else %}
+                    <div class="alert alert-info msg fade show" role="alert">{{ message }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+        {% endblock %}
+        {% block content %}{% endblock %}
+      </main>
+        <!-- ======= Footer ======= -->
+        <br>
+        {% block footer %}
+        <footer id="footer" class="footer mt-auto">      
+          <div class="footer-legal">
+            <div class="container">
+      
+              <div class="row justify-content-between">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                  <div class="copyright">
+                    © Copyright <strong><span>Laptop Trends</span></strong>. All Rights Reserved
+                  </div>
+      
+                  <div class="credits">
+                    Laptop Trends Learn Before you Buy.<br>
+                    Designed by Prasanna Ratna Kansakar
+                  </div>
+      
+                </div>
+      
+                <div class="col-md-6">
+                  <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
+                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                  </div>
+      
+                </div>
+      
+              </div>
+      
+            </div>
+          </div>
+        </footer>
+        <!-- End  Footer --> 
+        <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        {% endblock %}       
+    </body>    
+</html>

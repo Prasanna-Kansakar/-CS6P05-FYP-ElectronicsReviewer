@@ -1,0 +1,91 @@
+{% load static %}
+ 
+<div class="single-post">
+    <h1 class="mb-1">{{accessory.name}}</h1>
+    <div class="post-meta"><span class="mx-1">&bullet;Created on: </span> <span>{{accessory.created_date|date:"M d, Y" }}</span> </div>
+    <figure class="my-4">
+        <div class="text-center"> 
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                {%for item in images%}
+                    {%if forloop.counter == 1 %}
+                    <div class="carousel-item active">
+                        <img src="{% static item.img_url %}" class="d-block w-100" alt="img">
+                      </div>
+                  {%else%}
+                  <div class="carousel-item">
+                    <img src="{% static item.img_url %}" class="d-block w-100" alt="img">
+                  </div>
+                  {%endif%}
+                {%endfor%}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+              </div> 
+        </div>
+    </figure>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="post-entry-1 border-bottom">
+            <h2 class="mb-2">Prices in Daraz and SastoDeal:</h2>
+            <p class="mb-4 d-block">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>S.no</th>
+                            <th>Item</th>
+                            <th>From</th>
+                            <th>Price</th>
+                            <th>On Discount</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for item in accessory.prices.all%}
+                        {%if not item.is_deleted %}
+                        <tr>                           
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{{ item.url }}">{{ item.name }}</a></td>
+                            <td>{{ item.get_type_display }}</td>
+                            <td>
+                                {%if not item.has_discount %}
+                                    {{ item.price }}
+                                {%else%}
+                                    {{ item.discount_price }}
+                                {%endif%}
+                            </td>
+                            <td>
+                            {%if not item.has_discount %}
+                                    No
+                            {%else%}
+                                    Yes
+                            {%endif%}
+                            </td>                            
+                        </tr>
+                        {%endif%}
+                        {% empty %}
+                            <tr> 
+                                <td class="text-center" colspan="5">No Prices</td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </p>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <p></p>
+            <div class="post-entry-1">
+            <p class="mb-4 d-block"><h2>Brand: </h2>{{accessory.brand}}</p>
+            <p class="mb-4 d-block"><h2>Type: </h2>{{accessory.type}}</p>
+            <h2 class="mb-2">Features:</h2>
+            <p class="mb-4 d-block">{{accessory.feature|safe}}</p>
+            </div>
+        </div>
+        </div>
+</div>

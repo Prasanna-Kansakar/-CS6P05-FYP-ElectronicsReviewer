@@ -1,0 +1,8 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}{{blog.title}}{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    {% include 'shared/Blog_view.html' %}
+</div>
+{% endblock %}

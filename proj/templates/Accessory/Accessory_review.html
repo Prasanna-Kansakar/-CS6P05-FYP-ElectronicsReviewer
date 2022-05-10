@@ -1,0 +1,55 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block extracss %}
+<style>
+    #main {
+        margin-top: 10px;
+      }
+</style>
+{% endblock %}
+{% block content %}
+    {% block header %}
+    {% endblock %}
+    {% block navbar %}
+    {% endblock %}
+    <div class="card border-secondary">
+        <div class="card-header text-white bg-primary mb-3">
+            Write Review
+        </div>
+        <div class="card-body">
+            <form action= '' method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="form-horizontal">
+                    <div class="row form-group">                        
+                        <label class="mbsc-rating-secondary">
+                            Rating:
+                            <input mbsc-rating type="rating" data-val="right" max="5" value="{{ rating }}" data-template="{value}/{max}" name ="ratings" />
+                        </label>
+                    </div>
+                    <br>
+                    <div class="row form-group">
+                        <label class="control-label col-md-4">{{form.content.label}}</label>
+                        
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            {{form.content}}
+                        </div>
+                    </div>
+                    <br>            
+                    {{form.errors}}
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <div class="float-md-end">
+                                <button class="btn btn-secondary" type="submit" id="SubmitButton"><i class="fa fa-save"></i> Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% block footer %}{% endblock %}
+{% endblock %}

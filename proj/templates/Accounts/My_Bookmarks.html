@@ -1,0 +1,44 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}My Bookmarks{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>My Bookmarks</h2>
+    </div>
+    <div class="container">
+        <table class="table table-striped table-bordered table-hover datatable">
+            <thead class="table-dark">
+                <tr>
+                    <th>S.no</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in accessory %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{item.accessory}}</td>
+                    <td>Accessory</td>
+                    <td>
+                        <a class="btn btn-md  btn-green tooltips" href="{% url  'accessory user view' id=item.accessory.id %}" ><i class="fa fa-eye"></i></a>
+                    </td>
+                </tr>
+                {% endfor %} 
+                {% for item in laptop %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{item.laptop}}</td>
+                    <td>Laptop</td>
+                    <td>
+                        <a class="btn btn-md  btn-green tooltips" href="{% url  'laptop user view' id=item.laptop.id %}" ><i class="fa fa-eye"></i></a>
+                    </td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

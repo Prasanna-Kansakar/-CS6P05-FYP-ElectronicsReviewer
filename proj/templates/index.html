@@ -1,0 +1,118 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}Home page{% endblock %}
+{% block extracss %}
+<style>
+  li {
+    color: aliceblue;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Latest Blogs</h2>
+        <div><a href="{% url 'blog user index' %}" class="more"> See More</a></div>
+    </div>
+    
+    <section id="hero-slider" class="hero-slider">
+        <div class="container-md" data-aos="fade-in">
+          <div class="row">
+            <div class="col-12">
+              <div class="swiper sliderFeaturedPosts">
+                <div class="swiper-wrapper">
+                {% for item in blog %}
+                  <div class="swiper-slide">
+                    <a href="{% url 'blog user view' id=item.id %}" class="img-bg d-flex align-items-end" style="background-image: url('{% static item.thumbnail %}') ;">
+                      <div class="img-bg-inner">
+                        <h2>{{item.title}}</h2>
+                        <span class="author" style="color: aliceblue;">{{item.author.username}} - {{item.updated_date|date:"M d, Y" }}</span>
+                        <p>{{item.description}}</p>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+                </div> 
+                <div class="custom-swiper-button-next">
+                  <span class="bi-chevron-right"></span>
+                </div>
+                <div class="custom-swiper-button-prev">
+                  <span class="bi-chevron-left"></span>
+                </div>  
+                <div class="swiper-pagination"></div>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Latest Accessories</h2>
+        <div><a href="{% url 'accessory user index' %}" class="more"> See More</a></div>
+    </div>
+      <section id="hero-slider" class="hero-slider">
+        <div class="container-md" data-aos="fade-in">
+          <div class="row">
+            <div class="col-12">
+              <div class="swiper sliderFeaturedPosts">
+                <div class="swiper-wrapper">
+                {% for item in accessories %}
+                  <div class="swiper-slide">
+                    <a href="{% url 'accessory user view' id=item.id %}" class="img-bg d-flex align-items-end" style="background-image: url('{% static item.get_thumbnail %}') ;">
+                      <div class="img-bg-inner">
+                        <h2>{{item.name}}</h2>
+                        <span class="author" style="color: aliceblue;">Ratings : {{item.get_avg_rating}} <i class="fa fa-star"></i></span>
+                        <p style="color: aliceblue;">{{item.feature| truncatechars:210 |safe}}</p>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+                </div> 
+                <div class="custom-swiper-button-next">
+                  <span class="bi-chevron-right"></span>
+                </div>
+                <div class="custom-swiper-button-prev">
+                  <span class="bi-chevron-left"></span>
+                </div>  
+                <div class="swiper-pagination"></div>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Latest Laptops</h2>
+        <div><a href="{% url 'laptop user index' %}" class="more"> See More</a></div>
+    </div>
+      <section id="hero-slider" class="hero-slider">
+        <div class="container-md" data-aos="fade-in">
+          <div class="row">
+            <div class="col-12">
+              <div class="swiper sliderFeaturedPosts">
+                <div class="swiper-wrapper">
+                {% for item in laptop %}
+                  <div class="swiper-slide">
+                    <a href="{% url 'laptop user view' id=item.id %}" class="img-bg d-flex align-items-end" style="background-image: url('{% static item.get_thumbnail %}') ;">
+                      <div class="img-bg-inner">
+                        <h2>{{item.name}}</h2>
+                        <span class="author" style="color: aliceblue;">Ratings : {{item.get_avg_rating}} <i class="fa fa-star"></i></span>
+                        <p style="color: aliceblue;">{{item.feature| truncatechars:210 |safe}}</p>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+                </div> 
+                <div class="custom-swiper-button-next">
+                  <span class="bi-chevron-right"></span>
+                </div>
+                <div class="custom-swiper-button-prev">
+                  <span class="bi-chevron-left"></span>
+                </div>  
+                <div class="swiper-pagination"></div>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+</div>  
+{% endblock %}

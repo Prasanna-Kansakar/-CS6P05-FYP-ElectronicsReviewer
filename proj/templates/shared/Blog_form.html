@@ -1,0 +1,53 @@
+{% load static %}
+<div class="card border-secondary">
+    <div class="card-header text-white bg-primary mb-3">
+        Write Blog
+    </div>
+    <div class="card-body">
+        <form action= '' method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="form-horizontal">
+                <div class="row form-group">
+                    <label class="control-label col-md-2">{{form.title.label}}</label>
+                    <div class="col-md-10">
+                        {{form.title}}
+                    </div>
+                </div>
+                <br>
+                <div class="row form-group">
+                    <label class="control-label col-md-2">{{form.description.label}}</label>
+                    <div class="col-md-10">
+                        {{form.description}}
+                    </div>
+                </div>
+                <br>
+                <div class="row form-group">
+                    <label class="control-label col-md-2">{{form.content.label}}</label>
+                    <div class="col-md-10">
+                        {{form.content}}
+                    </div>
+                </div>
+                <br>            
+                <div class="row form-group">
+                    <label class="control-label col-md-2">{{form.thumbnail.label}}</label>
+                    <div class="col-md-4">
+                        {{form.thumbnail}}
+                    </div>
+                    <label class="control-label col-md-2">{{form.is_completed.label}}</label>
+                    <div class="col-md-4">
+                        {{form.is_completed}}
+                    </div>
+                </div>
+                <br> 
+                {{form.errors}}
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <div class="float-md-end">
+                            <button class="btn btn-secondary" type="submit" id="SubmitButton"><i class="fa fa-save"></i> Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

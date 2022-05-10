@@ -1,0 +1,49 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}Blog Index{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Blog Index</h2>
+        <div>
+            <a href="{% url 'blog create' %}" class="more"><i class="fa fa-plus"></i> Create new</a>
+        </div>
+    </div>
+    <div class="container">
+        <table class="table table-striped table-bordered table-hover datatable">
+            <thead class="table-dark">
+                <tr>
+                    <th>S.no</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Created Date</th>
+                    <th>Updated Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in blog %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.created_date|date:"M d, Y" }}</td>
+                    <td>{{item.updated_date|date:"M d, Y" }}</td>
+                    {% if item.is_completed %}
+                        <td>Publsihed</td>
+                    {% else %}
+                        <td>Saved as Draft</td>
+                    {% endif %}  
+                    <td>
+                        <a class="btn btn-md  btn-light-blue tooltips" href="{% url 'blog edit' id=item.id %}" ><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-md  btn-green tooltips" href="{% url 'blog detail' id=item.id %}" ><i class="fa fa-eye"></i></a>
+                        <a class="btn btn-md  btn-red tooltips" href="{% url 'blog delete' id=item.id %}" ><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

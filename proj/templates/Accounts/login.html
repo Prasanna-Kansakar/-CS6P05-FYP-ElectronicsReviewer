@@ -1,0 +1,52 @@
+{% extends 'shared/base.html'%}
+{% load static %}
+{% block title %}Login Page{% endblock %}
+{% block content %}
+<div class="container mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-5">
+        <h2>Login</h2>        
+    </div>
+    <div class="row">
+        <div class ="col-md-6 col-of offset-md-3">
+            <div class="card border-secondary">
+                <div class="card-header text-white bg-primary mb-3">
+                    Login
+                </div>
+                <div class="card-body">
+                    <form action= '' method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="form-horizontal">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">Username</label>
+                                <div class="col-md-8">
+                                    <input type="text" name="username" placeholder="Username..." class="form-control">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" name="password" placeholder="Password..." class="form-control" >
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <div class="float-md-end">
+                                        <button class="btn btn-secondary" type="submit" id="SubmitButton">Login</button>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="mt-4">
+                                <div class="d-flex justify-content-center links">
+                                    Don't have an account?.... <a href="{% url 'register' %}" class="ml-2"> Sign Up</a>
+                                </div>                        
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div> 
+{% endblock %}
