@@ -1,5 +1,6 @@
 from cgi import test
 from itertools import chain
+from proj import settings
 from django.forms import formset_factory
 from django.http import HttpResponseBadRequest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -676,5 +677,12 @@ def confirm_verification(request,id):
     obj = User02Verification.objects.filter(user=user)
     x = obj.first() 
     x.delete()
+    send_mail(
+            subject = "About your Verification with LaptopTrends",
+            message="It is to inform you that your request for verification has been granted by Laptop Trends.",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[user.email],
+            fail_silently=True,
+    )
     messages.add_message(request, messages.SUCCESS, ' User Verified.')  
     return redirect('verify') 
