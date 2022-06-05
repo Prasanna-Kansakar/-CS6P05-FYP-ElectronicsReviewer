@@ -49,12 +49,15 @@ def LaptopScraping(self):
             class2 = class1.find('div', {"class": "price-box price-final_price"})
             try:
                 x = class2.find('span', {'class': 'old-price priceold-line'}).text.split(" ")
+                x = list(filter(None, x))
                 Price = float(x[len(x)-2].replace(',', ''))
                 x = class2.find('span', {'class': 'special-price pricenew'}).text.split(" ")
+                x = list(filter(None, x))
                 Discount_price = float(x[len(x)-2].replace(',', ''))
                 discount = True
             except:
                 x = class2.find('span', {'class': 'price'}).text.split(" ")
+                x = list(filter(None, x))
                 Price = float(x[len(x)-1].replace(',', ''))
                 Discount_price = 0
                 discount = False

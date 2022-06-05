@@ -1,3 +1,4 @@
+from cgi import test
 from itertools import chain
 from django.forms import formset_factory
 from django.http import HttpResponseBadRequest
@@ -6,11 +7,28 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
+
+from .tasks import AccessoryScraping, LaptopScraping, LaptopScraping2, send_mail_func
 from .forms import BlogForm, CreateUserForm, AccessoryForm, AccessoryImageForm, LaptopImageForm, ReviewForm2, SearchAccessory, LaptopForm, ReviewForm1, SearchLaptop, comparelaptop
 from .models import Accessories01Accessories, Accessories04images, Accessories05Price, Blog01Blog, Bookmark01Laptop_Bookmark, Bookmark02Accessories_Bookmark, Laptop01Laptop, Laptop09images, Laptop10Price, Reviews01Laptop_Review, Reviews02Accessories_Review, User02Verification
 from django.contrib.auth import get_user_model, login, logout, authenticate
 from .decorators import allowed_user, unauthenticated_user
 from django.db.models import Subquery
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['SuperAdmin'])
+def scrap(request): 
+    LaptopScraping.delay()
+    LaptopScraping2.delay()
+    AccessoryScraping.delay()
+    return redirect('homepage') 
+
+@login_required(login_url='login')
+@allowed_user(allowed_roles=['SuperAdmin'])
+def send_mail(request): 
+    send_mail_func.delay()
+    return redirect('homepage') 
+
 
 def index(request):  
     blogs = Blog01Blog.objects.filter(is_completed=True, is_deleted=False)[:5]

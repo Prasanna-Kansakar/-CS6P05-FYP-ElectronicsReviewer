@@ -3,6 +3,8 @@ from . import views
 from django.urls.conf import include
 urlpatterns = [
     path('', views.index, name="homepage"),
+    path('scrap/', views.scrap, name="scrap"),
+    path('sendmail/', views.send_mail, name="send mail"),
     path('blog/', views.blog, name="blog index"),
     path('blog/create/', views.blog_create, name="blog create"),
     path('blog/<int:id>/delete/', views.blog_delete, name="blog delete"),
